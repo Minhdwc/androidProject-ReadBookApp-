@@ -4,17 +4,12 @@ public class Author {
     private String name;
     private String imgAuthor;
 
-    // No-argument constructor
     public Author() {
     }
-
-    // Parameterized constructor
     public Author(String name, String imgAuthor) {
         this.name = name;
         this.imgAuthor = imgAuthor;
     }
-
-    // Getters and setters
     public String getName() {
         return name;
     }

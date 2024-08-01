@@ -3,20 +3,20 @@ package com.example.project_app_book.model;
 import java.util.Map;
 
 public class Book {
-    private int authorId;
-    private int categoryId;
+    private String bookID;
+    private String authorId;
+    private String categoryId;
     private Map<String, String> content;
     private String description;
     private String image;
     private int publishedYear;
-    private int publisherId;
+    private String publisherId;
     private String title;
 
-    // Constructor không tham số
     public Book() {}
 
-    // Constructor có tham số
-    public Book(int authorId, int categoryId, Map<String, String> content, String description, String image, int publishedYear, int publisherId, String title) {
+    public Book(String bookID, String authorId, String categoryId, Map<String, String> content, String description, String image, int publishedYear, String publisherId, String title) {
+        this.bookID = bookID;
         this.authorId = authorId;
         this.categoryId = categoryId;
         this.content = content;
@@ -28,19 +28,27 @@ public class Book {
     }
 
     // Getter và Setter
-    public int getAuthorId() {
+    public String getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(String bookID) {
+        this.bookID = bookID;
+    }
+
+    public String getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(int authorId) {
+    public void setAuthorId(String authorId) {
         this.authorId = authorId;
     }
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -76,11 +84,11 @@ public class Book {
         this.publishedYear = publishedYear;
     }
 
-    public int getPublisherId() {
+    public String getPublisherId() {
         return publisherId;
     }
 
-    public void setPublisherId(int publisherId) {
+    public void setPublisherId(String publisherId) {
         this.publisherId = publisherId;
     }
 

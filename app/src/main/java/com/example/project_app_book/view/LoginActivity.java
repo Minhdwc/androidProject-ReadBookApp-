@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.google.gson.Gson;
 
 import com.example.project_app_book.R;
+import com.example.project_app_book.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
     private void handleLogin() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-
         if (validateInputs(email, password)) {
             authenticateUser(email, password);
         }
@@ -74,21 +75,23 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    private void authenticateUser(String email, String password) {
+    private void authenticateUser(final String email, final String password) {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boolean loginSuccess = false;
+                User loggedInUser = null;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String dbEmail = snapshot.child("email").getValue(String.class);
                     String dbPassword = snapshot.child("password").getValue(String.class);
                     if (email.equals(dbEmail) && password.equals(dbPassword)) {
                         loginSuccess = true;
+                        loggedInUser = snapshot.getValue(User.class);
                         break;
                     }
                 }
                 if (loginSuccess) {
-                    navigateToMainActivity();
+                    navigateToMainActivity(loggedInUser);
                 } else {
                     Toast.makeText(LoginActivity.this, "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show();
                 }
@@ -101,8 +104,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void navigateToMainActivity() {
+    private void navigateToMainActivity(User user) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Gson gson = new Gson();
+        String userJson = gson.toJson(user);
+        intent.putExtra("user", userJson);
         startActivity(intent);
         finish();
     }

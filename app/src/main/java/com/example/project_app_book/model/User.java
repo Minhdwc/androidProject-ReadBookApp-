@@ -11,11 +11,9 @@ public class User {
     private String password;
     private String phone;
 
-    // No-argument constructor
     public User() {
     }
 
-    // Parameterized constructor
     public User(String address, List<Boolean> collection, String dateOfBirth, String email, String name, String password, String phone) {
         this.address = address;
         this.collection = collection;

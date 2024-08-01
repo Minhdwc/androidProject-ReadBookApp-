@@ -22,7 +22,7 @@ import com.example.project_app_book.model.User;
 public class FragmentUser extends Fragment {
     private User user;
     private LinearLayout linearLayoutCircleIn, linearLayoutCircleOut, linearLayout_QR, linearLayout_ThongTinVeChungToi, linearLayout_DieuKhoanSuDung, linearLayout_ChinhSachBaoMat, linearLayout_LogOut, linearLayout_Delete_Account;
-    private TextView tvThongTinCaNhan;
+    private TextView tvThongTinCaNhan, tvUserName;
 
 
     public FragmentUser() {
@@ -45,6 +45,7 @@ public class FragmentUser extends Fragment {
     }
 
     private void addControls(View view){
+        tvUserName = view.findViewById(R.id.tvNameUser);
         tvThongTinCaNhan = view.findViewById(R.id.tvThongTinCaNhan);
         linearLayout_QR = view.findViewById(R.id.linearLayout_QR);
         linearLayoutCircleIn = view.findViewById(R.id.linearLayout_circle_in);
@@ -63,11 +64,17 @@ public class FragmentUser extends Fragment {
 
         AnimationUtil.applyScaleAnimation_fade(getContext(), linearLayoutCircleIn);
         AnimationUtil.applyScaleAnimation_fade(getContext(), linearLayoutCircleOut);
+        tvUserName.setText(user.getName());
 
         tvThongTinCaNhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AnimationUtil.applyScaleAnimation(getContext(), tvThongTinCaNhan);
+                FragmentDanhSachYeuThich frgYeuThich = new FragmentDanhSachYeuThich();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragLayoutLoad, frgYeuThich);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
         linearLayout_QR.setOnClickListener(new View.OnClickListener() {
